@@ -1,7 +1,10 @@
 // MONGO SET UP AND CONFIG
+require('dotenv').config()
 const mongoose = require('mongoose');
 
+
 // Mongo connection 
+// we dont set process.env.MONGO_URI to a var for memory best practice
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
