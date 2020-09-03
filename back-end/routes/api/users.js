@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const JWT_SECRET = process.env.JWT_SECRET;
+const db = require('../../models')
 
 // Load User model
 const User = require('../../models/User');
@@ -16,7 +17,7 @@ router.get('/test', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  User.findOne({email: req.body.email })
+  db.User.findOne({email: req.body.email })
   .then(user => {
     // if user exists send a 400 response
     if (user) {
@@ -45,5 +46,39 @@ router.post('/register', (req, res) => {
     }
   })
 })
+
+router.post('/login', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // find a user email
+  db.User.findOne({email}) // basically saying {email: email}
+  .then(user => { // HERE IS THE USER VAR WE ARE USING BELOW
+    if (!user) {
+      res.status(400).json({message: 'User Not Found!'})
+    } else {
+      // if we find a user, check password with bcrypt
+      bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          // User match, send JSON webtoken so theyre authenticated
+          // Create a token payload (you can include anything you want)
+          const payload = {
+            id: user.id,
+            name: user.name,
+            email: user.email
+          };
+          // Sign token, grab the jwt we imported
+          // which token, sign with secret, expires when?
+          jwt.sign(payload, JWT_SECRET, {expiresIn: 3600}, (error, token) => {
+            res.json({success: true, token: `Bearer ${token}`})
+          })
+        } else {
+          return res.status(400).json({ password: 'Password or email is incorrect'})
+        }
+      });
+    }
+  });
+});
 
 module.exports = router;
