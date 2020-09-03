@@ -25,4 +25,9 @@ db.on('error', (err) => {
   console.log(`Database Error \n ${err}`)
 });
 
+// when you import this module
+// require('./Model')
+// it imports an object. 
+// User is a value of the model object
+// db.User 
 module.exports.User = require('./User')

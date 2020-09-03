@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const db = require('../../models')
 
 // Load User model
-const User = require('../../models/User');
+// const User = require('../../models/User');
 
 // GET api/users/test (public)
 router.get('/test', (req, res) => {
@@ -47,6 +47,8 @@ router.post('/register', (req, res) => {
   })
 })
 
+
+// POST to api/users/login PUBLIC
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -80,5 +82,15 @@ router.post('/login', (req, res) => {
     }
   });
 });
+
+// GET api/users/current PRIVATE
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json({
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email
+  })
+})
+
 
 module.exports = router;
