@@ -21,7 +21,10 @@ import './App.css';
 const PrivateRoute = ({component: Component, ...rest}) => {
   const user = localStorage.getItem('jwtToken');
   return <Route {...rest} render={(props) => {
+    // when we hit this private route we want to return a Component
     // when we use ...props we can access the props directly. instead of a bunch of nested stuff
+    // when we say Component, we are not passing in the same Component we extend class components from
+    // THIS COMPONENT IS A PARAMETER WE PASSED IN!!!!!
     return user ? <Component {...rest} {...props} /> : <Redirect to="/login" />
   }} 
   />

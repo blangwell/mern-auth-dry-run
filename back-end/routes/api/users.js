@@ -24,6 +24,8 @@ router.post('/register', (req, res) => {
       return res.status(400).json({msg: 'Email already exists'})
     } else {
       // create a new user
+      // grab newUser data from front-end axios post request
+      // hence req.body
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,

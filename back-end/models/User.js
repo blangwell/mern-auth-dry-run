@@ -21,4 +21,7 @@ const UserSchema = new Schema({
   }
 })
 
+// we say User = mongoose so that we dont have to assign
+// to variable elsewhere and we can just refer to this 
+// collection as db.User
 module.exports = User = mongoose.model('User', UserSchema)

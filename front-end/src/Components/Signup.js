@@ -32,7 +32,9 @@ const Signup = () => {
     if (password === confirmPassword) {
       // rather than name: name, email: email.... we can do the following
       const newUser = {name, email, password}
-
+      //this axios call sends data to out backend api/users/register route
+      // we pass the newUser data we take from the form into the axios post
+      // so that our back end can take that information and store it in our DB
       axios.post(`${REACT_APP_SERVER_URL}/api/users/register`, newUser)
       .then(response => {
         setRedirect(true);
