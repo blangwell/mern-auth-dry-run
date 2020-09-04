@@ -6,7 +6,7 @@ import Welcome from './Components/Welcome';
 import About from './Components/About';
 import Footer from './Components/Footer';
 import Signup from './Components/Signup';
-// import Login from './Components/Login';
+import Login from './Components/Login';
 // import Profile from './Components/Profile';
 import Navbar from './Components/Navbar';
 import './App.css';
@@ -67,10 +67,10 @@ function App() {
       <div className="container mt-5">
         <Switch>
           <Route path="/signup" component={ Signup }/>
-          {/* <Route path="/login" 
-            render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} 
+          <Route path="/login" 
+            render={ (props) => <Login {...props} setCurrentUser={setCurrentUser} 
             setIsAuthenticated={setIsAuthenticated} user={currentUser}/>} 
-          /> */}
+          />
           <Route path="/about" component={About}/>
           {/* <PrivateRoute path="/profile" component={ Profile } user={currentUser} /> */}
           <Route exact path="/" component={ Welcome } />
